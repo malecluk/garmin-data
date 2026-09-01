@@ -1,0 +1,39 @@
+spring:
+  main:
+    banner-mode: off
+
+fit:
+  files-scanner:
+    directory-paths: 
+      #- "d:\\Garmin\\data\\2026-09-fit\\"
+      - "d:\\Garmin\\data\\2026-10-fit\\"
+
+  file-renamer:
+    enabled: false
+
+activity-processing:
+    walking-avg-pace-time:
+        - name: "Říjnová rychlostní chůze"
+          start-date: 2026-10-01T00:00:01
+          end-date: 2026-10-30T23:59:59
+          required-duration: PT3H
+          max-average-pace: 10.5
+    meditation-days:
+        - name: "Říjnové meditace"
+          start-date: 2026-10-01T00:00:01
+          end-date: 2026-10-30T23:59:59
+          required-days: 7
+    walking-hr-zones:
+        - name: "Říjnová chůze pro srdce"
+          start-date: 2026-10-01T00:00:01
+          end-date: 2026-10-30T23:59:59
+          required-duration: PT3H
+          required-zones: [2, 3]
+    running-descents:
+        - name: "Říjnové seběhy"
+          start-date: 2026-10-01T00:00:01
+          end-date: 2026-10-30T23:59:59
+          required-descent: 500
+
+logging:
+  config: classpath:log4j2.xml
