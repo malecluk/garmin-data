@@ -1,0 +1,50 @@
+spring:
+  main:
+    banner-mode: off
+
+fit:
+  mesg-dto-printer:
+    disable-all-prints: true
+    print-activity-mesg: true
+    print-device-info-mesg: false
+    print-device-settings-mesg: false
+    print-hr-zone-mesg: true
+    print-lap-mesg: false
+    print-session-mesg: true
+    print-sport-mesg: false
+    print-time-in-zone-mesg: true
+    print-timestamp-correlation-mesg: false
+    print-user-profile-mesg: true
+    print-zones-target-mesg: true
+
+  files-scanner:
+    directory-path: "d:\\Garmin\\data\\2029-09-fit\\"
+
+  parser:
+    strict: true
+    unknown-fields: true
+
+  file-renamer:
+    enabled: false
+
+activity-processing:
+    walking-avg-pace-time:
+        - name: "Zářijová rychlostní chůze"
+          start-date: 2026-09-01T00:00:01
+          end-date: 2026-09-30T23:59:59
+          required-duration: PT3H
+          max-average-pace: 10.5
+    meditation-days:
+        - name: "Zářijové meditace"
+          start-date: 2026-09-01T00:00:01
+          end-date: 2026-09-30T23:59:59
+          required-days: 7
+    walking-hr-zones:
+        - name: "Zářijová chůze pro srdce"
+          start-date: 2026-09-01T00:00:01
+          end-date: 2026-09-30T23:59:59
+          required-duration: PT3H
+          required-zones: [2, 3]
+
+logging:
+  config: classpath:log4j2.xml

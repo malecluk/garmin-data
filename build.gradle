@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    // for Mockito as Java Agent
+    mockitoAgent
+}
+
+configurations.configureEach {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
+dependencies {
+
+    // Spring Boot
+    implementation('org.springframework.boot:spring-boot-starter') {
+        // To exclude default Logback in favour to Log4j
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    
+    // log4j driven by Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    
+    // Garmin FIT SDK for reading .FIT files
+    implementation 'com.garmin:fit:21.214.0'
+    
+    // Spring Boot test framework
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+    // for Mockito as Java Agent
+    mockitoAgent('org.mockito:mockito-core') {
+        transitive = false
+    }
+}
+
+tasks.named('test') {
+    // turn on JUnit platform
+    useJUnitPlatform()
+    
+    // for Mockito as Java Agent
+    jvmArgs += "-javaagent:${configurations.mockitoAgent.singleFile}"
+}
