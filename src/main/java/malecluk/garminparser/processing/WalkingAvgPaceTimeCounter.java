@@ -13,6 +13,14 @@ import malecluk.garminparser.processing.results.ActivityListenerResult;
 import malecluk.garminparser.processing.results.WalkingAvgPaceTimeResult;
 import malecluk.garminparser.utils.DateTimeConverterHelper;
 
+/**
+ * Counts the timer duration of walking activities whose average pace is within
+ * the configured maximum pace and whose start time falls within the configured date range.
+ *
+ * <p>Only {@link Sport#WALKING} activities are considered. For qualifying
+ * activities, {@link Activity#getTotalTimerTime()} is added to the accumulated
+ * duration. Elapsed time is intentionally not used because it includes paused time.</p>
+ */
 public class WalkingAvgPaceTimeCounter implements ActivityAnalyzer {
 	
 	private static final Logger log = LogManager.getLogger(WalkingAvgPaceTimeCounter.class);

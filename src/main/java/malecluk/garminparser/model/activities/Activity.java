@@ -249,7 +249,7 @@ public class Activity {
 	}
 
 	/**
-	 * Returns the total time for which the activity timer was running, * excluding pauses.
+	 * Returns the total time for which the activity timer was running, excluding pauses.
 	 * @return total timer duration
 	 */
 	public Duration getTotalTimerTime() {
@@ -257,7 +257,7 @@ public class Activity {
 	}
 
 	/**
-	 * Sets the total time for which the activity timer was running, * excluding pauses.
+	 * Sets the total time for which the activity timer was running, excluding pauses.
 	 * @param totalTimerTime total timer duration
 	 */
 	public void setTotalTimerTime(Duration totalTimerTime) {

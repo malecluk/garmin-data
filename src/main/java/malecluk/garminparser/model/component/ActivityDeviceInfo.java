@@ -22,19 +22,19 @@ public class ActivityDeviceInfo {
 	
 	//-----------------------
 	
-	public int getManufacturer() {
+	public Integer getManufacturer() {
 		return manufacturer;
 	}
 
-	public void setManufacturer(int manufacturer) {
+	public void setManufacturer(Integer manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
-	public int getProduct() {
+	public Integer getProduct() {
 		return product;
 	}
 
-	public void setProduct(int product) {
+	public void setProduct(Integer product) {
 		this.product = product;
 	}
 

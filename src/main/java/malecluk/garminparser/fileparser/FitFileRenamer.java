@@ -20,7 +20,7 @@ import malecluk.garminparser.model.activities.Activity;
  * Renames FIT files according to the data stored in the corresponding activity. 
  * 
  * <p>Only files with an original name consisting of exactly eleven digits, 
- * optionally followed by {@code _ACTIVITY}, and ending with {@code .fit} are renamed.</p> 
+ * optionally followed by {@code _ACTIVITY} (case-insensitive), and ending with {@code .fit} (case-insensitive) are renamed.</p> 
  * 
  * <p>The new file name contains the original file number, activity start time, sport and sub-sport, for example: 
  * {@code 24375337180_2026-09-15_21-12-51_FLOOR_CLIMBING-GENERIC.fit}.</p> 
@@ -34,7 +34,7 @@ public class FitFileRenamer {
 	
 	private final FitConfiguration config;
 	
-	private static final Pattern FILE_NAME_PATTERN = Pattern.compile("^(\\d{11})(?:_ACTIVITY)?\\.fit$");
+	private static final Pattern FILE_NAME_PATTERN = Pattern.compile("^(\\d{11})(?:_ACTIVITY)?\\.fit$", Pattern.CASE_INSENSITIVE);
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").withZone(ZoneId.systemDefault());
 	
 	public FitFileRenamer(FitConfiguration config) {
@@ -45,7 +45,7 @@ public class FitFileRenamer {
 	 * Renames the FIT file associated with the specified activity. 
 	 * 
 	 * <p>If file renaming is disabled in the configuration, this method does 
-	 * nothing. The method also does nothing if the activity has no associated ¨
+	 * nothing. The method also does nothing if the activity has no associated
 	 * file or if the current file name does not match the expected original 
 	 * FIT file name format.</p> 
 	 * 

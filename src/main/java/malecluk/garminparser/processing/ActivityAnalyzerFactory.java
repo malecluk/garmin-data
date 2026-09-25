@@ -6,9 +6,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Creates activity analyzers from the configured activity-processing properties.
+ *
+ * <p>Each configured analyzer entry results in a separate analyzer instance.
+ * This allows multiple analyzers of the same type to run simultaneously with
+ * different dates, thresholds, or other parameters.</p>
+ */
 @Component
 public class ActivityAnalyzerFactory {
 
+	/**
+	 * Creates analyzers according to the supplied configuration.
+	 *
+	 * @param properties activity-processing configuration
+	 * @return configured analyzer instances
+	 */
 	public List<ActivityAnalyzer> createAnalyzers(ActivityProcessingProperties properties) {
 		
 		List<ActivityAnalyzer> analyzers = new ArrayList<>();

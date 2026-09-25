@@ -23,9 +23,13 @@ public class OutdoorMovingActivity extends Activity {
 	//-----------------------
 
 	/**
-	 * Calculates the average pace as minutes per kilometer.
-	 * <p>The calculation is based on the enhanced average speed.</p>
-	 * @return average pace in minutes per kilometer, or {@code null} if the enhanced average speed is not available or is not positive
+	 * Calculates the average pace from the enhanced average speed.
+	 *
+	 * <p>The returned value is expressed as decimal minutes per kilometer.
+	 * For example, {@code 10.5} represents 10 minutes 30 seconds per kilometer.</p>
+	 *
+	 * @return average pace in decimal minutes per kilometer, or {@code null}
+	 *         if the enhanced average speed is not available or is not positive
 	 */
 	public Float getAvgPace() {
 		

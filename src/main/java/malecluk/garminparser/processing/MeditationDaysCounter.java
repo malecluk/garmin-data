@@ -15,6 +15,12 @@ import malecluk.garminparser.processing.results.ActivityListenerResult;
 import malecluk.garminparser.processing.results.MeditationDaysResult;
 import malecluk.garminparser.utils.DateTimeConverterHelper;
 
+/**
+ * Counts distinct calendar days on which a meditation activity occurred
+ * within the configured date range.
+ *
+ * <p>Multiple meditation activities on the same calendar day count only once.</p>
+ */
 public class MeditationDaysCounter implements ActivityAnalyzer {
 	
 	private static final Logger log = LogManager.getLogger(MeditationDaysCounter.class);

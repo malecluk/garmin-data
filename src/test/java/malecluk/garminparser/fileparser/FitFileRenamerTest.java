@@ -16,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import malecluk.garminparser.FitConfiguration;
 import malecluk.garminparser.model.Sport;
@@ -83,16 +85,29 @@ class FitFileRenamerTest {
 		assertTrue(Files.exists(originalPath));
 		assertEquals(originalPath, activity.getFilePath());
 	}
-
-	@Test
-	void rename_withInvalidFileExtension_doesNothing() throws IOException {
-		Path originalPath = createFile("12345678901.FIT");
+	
+	@ParameterizedTest
+	@ValueSource(strings = {
+			"24375337180.fit",
+			"24375337180.FIT",
+			"24375337180.Fit",
+			"24375337180.fIt",
+			"24375337180_ACTIVITY.fit",
+			"24375337180_ACtiVITY.FIT",
+			"24375337180_activity.FiT"
+	})
+	void rename_acceptsFitExtensionAndActivitySuffixInAnyCase(String fileName) throws IOException {
+		Path originalPath = createFile(fileName);
 		Activity activity = createActivity(originalPath);
+
+		String expectedFileName = expectedFileName("24375337180");
+		Path expectedPath = tempDir.resolve(expectedFileName);
 
 		renamer.rename(activity);
 
-		assertTrue(Files.exists(originalPath));
-		assertEquals(originalPath, activity.getFilePath());
+		assertFalse(Files.exists(originalPath));
+		assertTrue(Files.exists(expectedPath));
+		assertEquals(expectedPath, activity.getFilePath());
 	}
 
 	@Test

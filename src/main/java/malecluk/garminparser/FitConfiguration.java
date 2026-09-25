@@ -2,6 +2,9 @@ package malecluk.garminparser;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Application configuration loaded from the {@code fit} configuration prefix.
+ */
 @ConfigurationProperties(prefix = "fit")
 public record FitConfiguration(
 		MesgDtoPrinter mesgDtoPrinter,
@@ -11,6 +14,9 @@ public record FitConfiguration(
         //Export export
 ) {
 
+	/**
+	 * Configuration controlling diagnostic printing of parsed FIT messages.
+	 */
 	public record MesgDtoPrinter(
 			boolean disableAllPrints,
 			boolean printActivityMesg,
@@ -26,15 +32,24 @@ public record FitConfiguration(
             boolean printZonesTargetMesg
     ) {}
 	
+	/**
+	 * Configuration controlling whether processed FIT files are renamed.
+	 */
 	public record FileRenamer(
 			boolean enabled
 	) {}
 	
+	/**
+	 * Configuration controlling FIT decoding behavior.
+	 */
 	public record Parser(
             boolean strict,
             boolean unknownFields
     ) {}
 	
+	/**
+	 * Configuration of the directory scanned for FIT files.
+	 */
 	public record FilesScanner(
 			String directoryPath
 	) {}

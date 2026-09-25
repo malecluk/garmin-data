@@ -21,12 +21,24 @@ import com.garmin.fit.ZonesTargetMesg;
 
 import malecluk.garminparser.fileparser.dto.ParsedFitFileMessagesDTO;
 
+/**
+ * Receives decoded FIT messages and stores supported message types
+ * in a {@link ParsedFitFileMessagesDTO}.
+ *
+ * <p>Messages not explicitly handled by this listener are ignored.</p>
+ */
 public class MyMesgListener implements MesgListener {
 	
 	private static final Logger log = LogManager.getLogger(MyMesgListener.class);
 
 	private final ParsedFitFileMessagesDTO messagesDTO = new ParsedFitFileMessagesDTO();
 	
+	/**
+	 * Receives one decoded FIT message and converts supported message types
+	 * to their corresponding FIT SDK message class before storing them.
+	 *
+	 * @param mesg decoded FIT message
+	 */
 	@Override
 	public void onMesg(Mesg mesg) {
 		log.debug("onMesg(): ({}) {}", mesg.getNum(), mesg.getName());

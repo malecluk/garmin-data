@@ -13,9 +13,22 @@ import malecluk.garminparser.model.activities.Activity;
 import malecluk.garminparser.model.component.HeartRateZone;
 import malecluk.garminparser.model.component.HeartRateZones;
 
+/**
+ * Maps FIT time-in-zone data to the activity heart-rate zone model.
+ *
+ * <p>Currently only session-level {@link TimeInZoneMesg} messages are
+ * supported. Time-in-zone messages referencing laps or other message types
+ * are ignored.</p>
+ */
 @Component
 public class HeartRateZonesMapper {
 
+	/**
+	 * Maps session-level heart-rate zone durations to an activity.
+	 *
+	 * @param activity activity to update
+	 * @param mesg FIT time-in-zone message
+	 */
 	public void map(Activity activity, TimeInZoneMesg mesg) {
 
 		// for now we don't want lap zones

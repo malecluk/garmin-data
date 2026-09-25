@@ -16,6 +16,16 @@ import malecluk.garminparser.processing.results.ActivityListenerResult;
 import malecluk.garminparser.processing.results.WalkingInHRZonesTimeResults;
 import malecluk.garminparser.utils.DateTimeConverterHelper;
 
+/**
+ * Counts time spent in configured heart-rate zones during walking activities.
+ *
+ * <p>Only walking activities whose start time falls within the configured date
+ * range are considered. For each required zone number that is present in the
+ * activity, its recorded duration is added to the accumulated duration.</p>
+ *
+ * <p>Zone numbers refer to the actual zone numbers stored in
+ * {@link HeartRateZone#number()}, not to positions in the zone list.</p>
+ */
 public class WalkingInHRZonesTimeCounter  implements ActivityAnalyzer {
 
 	private static final Logger log = LogManager.getLogger(WalkingInHRZonesTimeCounter.class);
