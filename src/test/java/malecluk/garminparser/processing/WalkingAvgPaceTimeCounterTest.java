@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import malecluk.garminparser.model.Sport;
 import malecluk.garminparser.model.activities.Walking;
+import malecluk.garminparser.model.value.Distance;
 import malecluk.garminparser.processing.results.WalkingAvgPaceTimeResult;
 
 class WalkingAvgPaceTimeCounterTest {
@@ -33,6 +34,20 @@ class WalkingAvgPaceTimeCounterTest {
 		counter = new WalkingAvgPaceTimeCounter(NAME, REQUIRED_DURATION, MAX_AVERAGE_PACE, START_DATE, END_DATE);
 	}
 
+	@Test
+	void onActivity_addsTotalTimerTime_notTotalElapsedTime() {
+	    Walking activity = createWalking("2026-09-15T12:00:00Z", 10.0f, Duration.ofMinutes(45));
+	    activity.setTotalTimerTime(Duration.ofSeconds(600));
+	    activity.setTotalElapsedTime(Duration.ofSeconds(900));
+	    activity.setTotalDistance(new Distance(1000f));
+
+	    counter.onActivity(activity);
+
+	    WalkingAvgPaceTimeResult result = (WalkingAvgPaceTimeResult) counter.getResult();
+
+	    assertEquals(Duration.ofSeconds(600), result.countedDuration());
+	}
+	
 	@Test
 	void shouldCountWalkingActivityWithinDateRangeWithAcceptablePace() {
 		Walking activity = createWalking("2026-09-15T12:00:00Z", 10.0f, Duration.ofMinutes(45));

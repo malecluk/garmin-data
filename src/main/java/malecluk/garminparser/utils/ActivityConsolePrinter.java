@@ -112,7 +112,7 @@ public class ActivityConsolePrinter {
 		sb.append("fileCreationTime:   ").append(DateTimeConverterHelper.formatDate(a.getFileCreationTime())).append("\n");
 		
 		String formattedTotalElapsedTime = DateTimeConverterHelper.formatSeconds(a.getTotalElapsedTime());
-		sb.append("totalElapsedTime    ").append(a.getTotalElapsedTime().toSeconds()).append(" / ").append(formattedTotalElapsedTime).append("\n");
+		sb.append("totalElapsedTime:   ").append(a.getTotalElapsedTime().toSeconds()).append(" / ").append(formattedTotalElapsedTime).append("\n");
 		
 		String formattedTotalTimerTime = DateTimeConverterHelper.formatSeconds(a.getTotalTimerTime());
 		sb.append("totalTimerTime:     ").append(a.getTotalTimerTime().toSeconds()).append(" / ").append(formattedTotalTimerTime).append("\n");
