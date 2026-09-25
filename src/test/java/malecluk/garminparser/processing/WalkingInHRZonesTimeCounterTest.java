@@ -110,6 +110,23 @@ class WalkingInHRZonesTimeCounterTest {
 		assertTrue(result.isCompleted());
 	}
 
+	@Test
+	void shouldIgnoreMissingRequiredZone() {
+	    WalkingInHRZonesTimeCounter counter = new WalkingInHRZonesTimeCounter("September walking", Duration.ofHours(1),
+	            START, END, List.of(2, 3));
+
+	    Walking walking = createWalking(Instant.parse("2026-09-15T10:00:00Z"),
+	            List.of(createZone(0, Duration.ofMinutes(5)), createZone(1, Duration.ofMinutes(10)),
+	                    createZone(2, Duration.ofMinutes(30))));
+
+	    counter.onActivity(walking);
+
+	    WalkingInHRZonesTimeResults result = (WalkingInHRZonesTimeResults) counter.getResult();
+
+	    assertEquals(Duration.ofMinutes(30), result.countedDuration());
+	    assertFalse(result.isCompleted());
+	}
+
 	private Walking createWalking(Instant startTime, List<HeartRateZone> zones) {
 		Walking walking = new Walking();
 

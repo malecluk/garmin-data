@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import malecluk.garminparser.model.Sport;
 import malecluk.garminparser.model.activities.Activity;
 import malecluk.garminparser.model.activities.Walking;
+import malecluk.garminparser.model.component.HeartRateZone;
 import malecluk.garminparser.model.component.HeartRateZones;
 import malecluk.garminparser.processing.results.ActivityListenerResult;
 import malecluk.garminparser.processing.results.WalkingInHRZonesTimeResults;
@@ -63,9 +64,13 @@ public class WalkingInHRZonesTimeCounter  implements ActivityAnalyzer {
 				HeartRateZones zones = w.getHeartRateZones();
 				
 				for (Integer zoneNum : requiredZones) {
-					//log.debug("Zone num: " + zoneNum + " time: " + DateTimeConverterHelper.formatSeconds(zones.get(zoneNum).time()));
-					log.debug("Adding " + DateTimeConverterHelper.formatSeconds(zones.get(zoneNum).time()) + " from zone " + zoneNum);
-					this.countedDuration = this.countedDuration.plus(zones.get(zoneNum).time());
+					
+					if (zones.hasZone(zoneNum)) {
+						HeartRateZone zone = zones.get(zoneNum);
+
+						log.debug("Adding " + DateTimeConverterHelper.formatSeconds(zone.time()) + " from zone " + zoneNum);
+						this.countedDuration = this.countedDuration.plus(zone.time());
+					}
 				}
 			}
 		}
