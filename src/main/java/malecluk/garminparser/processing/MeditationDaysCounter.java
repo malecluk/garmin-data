@@ -33,10 +33,18 @@ public class MeditationDaysCounter implements ActivityAnalyzer {
     private final Instant endDate;
     
     /**
-	 * How many different days are needed
-	 */
+     * Number of distinct calendar days containing a qualifying meditation activity required to complete the analyzer.
+     */
 	private final Integer requiredDays;
 	
+	/**
+	 * Creates a meditation-days analyzer.
+	 *
+	 * @param name analyzer name used in the result and console output
+	 * @param startDate start of the date and time range in which meditation activities are counted
+	 * @param endDate end of the date and time range in which meditation activities are counted
+	 * @param requiredDays number of distinct calendar days required to complete the analyzer
+	 */
 	public MeditationDaysCounter(
 			String name, 
 			Instant startDate, 

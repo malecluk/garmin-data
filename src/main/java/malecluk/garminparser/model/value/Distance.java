@@ -14,15 +14,15 @@ public record Distance(Double meters) {
     }
 
 	/**
-     * Converts this distance to meters.
-     * @return distance in meters
-     */
+	 * Returns the distance in meters.
+	 * @return distance in meters
+	 */
     public Double toMeters() {
         return meters;
     }
 
     /**
-     * Converts this distance to kilometers.
+     * Returns the distance in kilometers.
      * @return distance in kilometers
      */
     public Double toKilometers() {

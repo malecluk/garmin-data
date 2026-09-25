@@ -11,7 +11,11 @@ import malecluk.garminparser.FitConfiguration;
 import malecluk.garminparser.fileparser.dto.ParsedFitFileMessagesDTO;
 
 /**
- * Helper class just for printing content of ParsedFitFileMessagesDTO into console 
+ * Prints the contents of a {@link ParsedFitFileMessagesDTO} to the console
+ * according to the configured message-printing options.
+ *
+ * <p>Printing can be disabled globally or individually for supported FIT
+ * message types through {@link FitConfiguration.MesgDtoPrinter}.</p>
  */
 @Component
 public class ParsedFitFileMessagesDTOPrinter {
@@ -22,6 +26,14 @@ public class ParsedFitFileMessagesDTOPrinter {
 		this.config = config;
 	}
 
+	/**
+	 * Prints supported FIT messages contained in the parsed message DTO.
+	 *
+	 * <p>The output is controlled by the configured message-printing flags.
+	 * If all printing is disabled, the method returns without producing output.</p>
+	 *
+	 * @param dto parsed FIT messages to print
+	 */
 	public void print(ParsedFitFileMessagesDTO dto) {
 		
 		if (config.mesgDtoPrinter().disableAllPrints()) {

@@ -10,17 +10,15 @@ public record HeartRateZones(List<HeartRateZone> zonesList) {
 	/**
 	 * Finds a heart-rate zone by its actual zone number.
 	 *
-	 * <p>The supplied number is matched against
-	 * {@link HeartRateZone#number()}, not against the position of the zone
-	 * in {@code zonesList}.</p>
+	 * <p>The zone number is matched against {@link HeartRateZone#number()},
+	 * not against the position of the zone in the list.</p>
 	 *
-	 * @param zoneNumber zone number to find
-	 * @return matching zone, or {@code null} if the zone is not present
+	 * @param zoneNumber actual zone number to find
+	 * @return the matching heart-rate zone, or {@code null} if no such zone exists
 	 */
 	public HeartRateZone get(int zoneNumber) {
 
 		return zonesList.stream().filter(zone -> zone.number().equals(zoneNumber)).findFirst().orElse(null);
-
 	}
 
 	/**
@@ -35,6 +33,5 @@ public record HeartRateZones(List<HeartRateZone> zonesList) {
 	public boolean hasZone(int zoneNumber) {
 
 		return zonesList.stream().anyMatch(zone -> zone.number().equals(zoneNumber));
-
 	}
 }

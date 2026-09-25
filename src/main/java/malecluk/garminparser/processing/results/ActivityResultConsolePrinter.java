@@ -6,9 +6,20 @@ import org.springframework.stereotype.Component;
 
 import malecluk.garminparser.utils.DateTimeConverterHelper;
 
+/**
+ * Prints activity analyzer results to the application console.
+ *
+ * <p>Each supported result type has its own human-readable console representation.</p>
+ */
 @Component
 public class ActivityResultConsolePrinter {
 	
+	/**
+	 * Prints all activity analyzer results contained in the processing result.
+	 *
+	 * @param processingResult aggregated results produced by the configured activity analyzers
+	 * @throws IllegalArgumentException if the result contains an unsupported result type
+	 */
 	public void print(ActivityProcessingResult processingResult) {
 
         for (ActivityListenerResult result : processingResult.results()) {

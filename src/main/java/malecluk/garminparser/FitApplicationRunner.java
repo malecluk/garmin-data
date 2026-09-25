@@ -19,6 +19,16 @@ import malecluk.garminparser.processing.results.ActivityResultConsolePrinter;
 import malecluk.garminparser.utils.ActivityConsolePrinter;
 import malecluk.garminparser.utils.ParsedFitFileMessagesDTOPrinter;
 
+/**
+ * Orchestrates the processing of Garmin FIT files.
+ *
+ * <p>The runner scans the configured directory for FIT files, parses each file,
+ * maps the parsed messages to an application domain activity, optionally renames
+ * the source file, and passes the activity to all configured analyzers.</p>
+ *
+ * <p>After all files have been processed, the results produced by the analyzers
+ * are printed to the console.</p>
+ */
 @Component
 public class FitApplicationRunner implements CommandLineRunner {
 	
@@ -51,6 +61,17 @@ public class FitApplicationRunner implements CommandLineRunner {
         this.resultPrinter = resultPrinter;
     }
 
+	/**
+	 * Processes all FIT files found in the configured input directory.
+	 *
+	 * <p>Each FIT file is parsed into a {@link ParsedFitFileMessagesDTO}, mapped to
+	 * an {@link Activity}, optionally renamed according to the activity data, and
+	 * passed to the configured activity analyzers. After all files have been
+	 * processed, the aggregated analyzer results are printed.</p>
+	 *
+	 * @param args command-line arguments passed to the Spring Boot application
+	 * @throws Exception if processing of a FIT file fails
+	 */
     @Override
     public void run(String... args) throws Exception {
 

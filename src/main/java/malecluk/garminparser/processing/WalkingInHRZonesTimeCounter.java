@@ -33,15 +33,31 @@ public class WalkingInHRZonesTimeCounter  implements ActivityAnalyzer {
 	private final String name;
 	
 	/**
-	 * Number of seconds required to fulfill this task
+	 * Amount of qualifying time spent in the configured heart-rate zones required to complete the analyzer.
 	 */
     private final Duration requiredDuration;
     private final Instant startDate;
     private final Instant endDate;
-    List<Integer> requiredZones;
+    
+    /**
+     * Actual heart-rate zone numbers whose recorded durations are included in the count.
+     *
+     * <p>Zone numbers are matched against {@link HeartRateZone#number()} and are
+     * not interpreted as positions in the zone list.</p>
+     */
+    private final List<Integer> requiredZones;
 	
     private Duration countedDuration = Duration.ZERO;
     
+    /**
+     * Creates a walking heart-rate-zone analyzer.
+     *
+     * @param name analyzer name used in the result and console output
+     * @param requiredDuration amount of qualifying time spent in the configured heart-rate zones required to complete the analyzer
+     * @param startDate start of the date and time range in which walking activities are counted
+     * @param endDate end of the date and time range in which walking activities are counted
+     * @param requiredZones actual heart-rate zone numbers whose recorded durations are included in the count
+     */
 	public WalkingInHRZonesTimeCounter(String name, Duration requiredDuration, Instant startDate, Instant endDate,
 			List<Integer> requiredZones) {
 		super();

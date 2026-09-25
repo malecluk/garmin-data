@@ -12,9 +12,15 @@ import malecluk.garminparser.model.value.Distance;
 public class ActivityElevationDataMapper {
 
 	/**
-	 * Method will set parameters for elevation (ascent, descent, ...) for Activity "a" based on SessionMesg "m"
-	 * @param a Activity where params will be set
-	 * @param m SessionMesg from which params will be read
+	 * Maps total ascent and total descent from a FIT {@link SessionMesg}
+	 * to an {@link Activity}.
+	 *
+	 * <p>If the activity does not yet contain elevation data, a new
+	 * {@link ActivityElevationData} instance is created. Missing ascent or
+	 * descent values in the FIT message are mapped to {@code null}.</p>
+	 *
+	 * @param a activity to update
+	 * @param m FIT session message containing elevation data
 	 */
 	public void setActivityElevationData(Activity a, SessionMesg m) {
 		if (a.getElevationData() == null) {

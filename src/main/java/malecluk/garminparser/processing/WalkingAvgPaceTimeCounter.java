@@ -14,11 +14,12 @@ import malecluk.garminparser.processing.results.WalkingAvgPaceTimeResult;
 import malecluk.garminparser.utils.DateTimeConverterHelper;
 
 /**
- * Counts the timer duration of walking activities whose average pace is within
- * the configured maximum pace and whose start time falls within the configured date range.
+ * Counts the timer duration of walking activities whose average pace is below
+ * the configured maximum pace and whose start time falls within the configured
+ * date and time range.
  *
- * <p>Only {@link Sport#WALKING} activities are considered. For qualifying
- * activities, {@link Activity#getTotalTimerTime()} is added to the accumulated
+ * <p>Only {@link Sport#WALKING} activities are considered. For each qualifying
+ * activity, {@link Activity#getTotalTimerTime()} is added to the accumulated
  * duration. Elapsed time is intentionally not used because it includes paused time.</p>
  */
 public class WalkingAvgPaceTimeCounter implements ActivityAnalyzer {
@@ -28,7 +29,7 @@ public class WalkingAvgPaceTimeCounter implements ActivityAnalyzer {
 	private final String name;
 	
 	/**
-	 * Number of seconds required to fulfill this task
+	 * Amount of qualifying walking timer duration required to complete the analyzer.
 	 */
     private final Duration requiredDuration;
     private final Float maxAveragePace;
@@ -37,6 +38,15 @@ public class WalkingAvgPaceTimeCounter implements ActivityAnalyzer {
     
     private Duration countedDuration = Duration.ZERO;
     
+    /**
+     * Creates a walking average-pace analyzer.
+     *
+     * @param name analyzer name used in the result and console output
+     * @param requiredDuration amount of qualifying walking timer duration required to complete the analyzer
+     * @param maxAveragePace maximum average pace accepted, expressed in minutes per kilometer
+     * @param startDate start of the date and time range in which walking activities are counted
+     * @param endDate end of the date and time range in which walking activities are counted
+     */
     public WalkingAvgPaceTimeCounter(
             String name,
             Duration requiredDuration,

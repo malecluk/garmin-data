@@ -20,19 +20,23 @@ public record HeartRateZone(
 		Integer number,
 		
 		/**
-		 * Inclusive lower heart-rate boundary in beats per minute,
-		 * or {@code null} when the zone has no lower boundary.
+		 * Minimum heart rate belonging to this zone, in beats per minute.
+		 *
+		 * <p>The value is inclusive. A {@code null} value means that this zone has
+		 * no lower heart-rate boundary.</p>
 		 */
         Integer minBpm,
         
         /**
-         * Inclusive upper heart-rate boundary in beats per minute,
-         * or {@code null} when the zone has no upper boundary.
+         * Maximum heart rate belonging to this zone, in beats per minute.
+         *
+         * <p>The value is inclusive. A {@code null} value means that this zone has
+         * no upper heart-rate boundary.</p>
          */
         Integer maxBpm,
         
         /**
-         * Time spent in this heart-rate zone.
+         * Duration spent in this heart-rate zone during the activity.
          */
         Duration time
 ) {

@@ -108,6 +108,11 @@ public class MyMesgListener implements MesgListener {
 		}
 	}
 	
+	/**
+	 * Returns the FIT messages collected by this listener.
+	 *
+	 * @return DTO containing all supported FIT messages received by this listener
+	 */
 	public ParsedFitFileMessagesDTO getMessages() {
 		return messagesDTO;
 	}

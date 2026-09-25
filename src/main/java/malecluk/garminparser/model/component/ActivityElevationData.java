@@ -8,12 +8,12 @@ import malecluk.garminparser.model.value.Distance;
 public class ActivityElevationData {
 
 	/**
-	 * Total elevation gained during the activity.
-	 */	
+	 * Total ascent during the activity, expressed as a {@link Distance} in meters.
+	 */
 	private Distance totalAscent;
 	
 	/**
-	 * Total elevation lost during the activity.
+	 * Total descent during the activity, expressed as a {@link Distance} in meters.
 	 */
     private Distance totalDescent;
     

@@ -10,8 +10,19 @@ import java.time.LocalDateTime;
  */
 public class MeditationDaysProperties {
 
+	/**
+	 * Name of the analyzer used in its result and console output.
+	 */
 	private String name;
+	
+	/**
+	 * Start of the date and time range in which meditation activities are counted.
+	 */
     private LocalDateTime startDate;
+    
+    /**
+     * End of the date and time range in which meditation activities are counted.
+     */
     private LocalDateTime endDate;
     
     /**

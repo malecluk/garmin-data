@@ -10,17 +10,23 @@ package malecluk.garminparser.model.component;
 public class ActivityDeviceInfo {
 	
 	/**
-	 * manufacturer code
+	 * Garmin FIT manufacturer identifier of the device that recorded the activity.
+	 *
+	 * <p>The value is stored as provided by the Garmin FIT SDK and is not converted
+	 * to a human-readable manufacturer name.</p>
 	 */
 	private Integer manufacturer;
 	
 	/**
-	 * product code
+	 * Garmin FIT product identifier of the device that recorded the activity.
+	 *
+	 * <p>The value is stored as provided by the Garmin FIT SDK and is not converted
+	 * to a human-readable product name.</p>
 	 */
 	private Integer product;
 	
 	/**
-	 * Serial number of watches which created this activity.
+	 * Serial number of the device that recorded the activity.
 	 */
 	private Long serialNumber;
 	
@@ -49,6 +55,4 @@ public class ActivityDeviceInfo {
 	public void setSerialNumber(Long serialNumber) {
 		this.serialNumber = serialNumber;
 	}
-	
-	
 }
