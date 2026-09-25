@@ -17,7 +17,7 @@ import malecluk.garminparser.model.component.HeartRateZone;
 import malecluk.garminparser.model.component.HeartRateZones;
 import malecluk.garminparser.processing.results.WalkingInHRZonesTimeResults;
 
-public class WalkingInHRZonesTimeCounterTest {
+class WalkingInHRZonesTimeCounterTest {
 
 	private static final Instant START = Instant.parse("2026-09-01T00:00:00Z");
 	private static final Instant END = Instant.parse("2026-09-30T23:59:59Z");

@@ -13,7 +13,7 @@ import malecluk.garminparser.model.Sport;
 import malecluk.garminparser.model.activities.Meditation;
 import malecluk.garminparser.processing.results.MeditationDaysResult;
 
-public class MeditationDaysCounterTest {
+class MeditationDaysCounterTest {
 
 	private static final String NAME = "September meditation";
 
@@ -135,7 +135,7 @@ public class MeditationDaysCounterTest {
 	}
 
 	@Test
-	public void shouldReturnConfiguredValuesInResult() {
+	void shouldReturnConfiguredValuesInResult() {
 		MeditationDaysResult result = getResult();
 
 		assertEquals(NAME, result.name());

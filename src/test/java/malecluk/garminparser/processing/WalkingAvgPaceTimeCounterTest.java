@@ -14,7 +14,7 @@ import malecluk.garminparser.model.Sport;
 import malecluk.garminparser.model.activities.Walking;
 import malecluk.garminparser.processing.results.WalkingAvgPaceTimeResult;
 
-public class WalkingAvgPaceTimeCounterTest {
+class WalkingAvgPaceTimeCounterTest {
 
 	private static final String NAME = "September walking";
 
