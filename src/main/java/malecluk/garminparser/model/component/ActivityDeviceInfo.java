@@ -1,7 +1,11 @@
 package malecluk.garminparser.model.component;
 
 /**
- * Holder object for informations about device (watches) which created activity.
+ * Contains Garmin FIT device identification data associated with an activity.
+ *
+ * <p>The manufacturer and product values are stored as the numeric values
+ * provided by the Garmin FIT SDK. They are not converted to human-readable
+ * manufacturer or product names.</p>
  */
 public class ActivityDeviceInfo {
 	

@@ -2,12 +2,22 @@ package malecluk.garminparser.processing;
 
 import java.time.LocalDateTime;
 
+/**
+ * Configuration of a meditation-days analyzer.
+ *
+ * <p>The analyzer counts distinct calendar days on which a meditation
+ * activity starts within the configured date range.</p>
+ */
 public class MeditationDaysProperties {
 
 	private String name;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private int requiredDays;
+    
+    /**
+     * Number of distinct meditation days required to complete the analyzer.
+     */
+    private Integer requiredDays;
     
     //-----------------------
     
@@ -35,11 +45,11 @@ public class MeditationDaysProperties {
 		this.endDate = endDate;
 	}
 	
-	public int getRequiredDays() {
+	public Integer getRequiredDays() {
 		return requiredDays;
 	}
 	
-	public void setRequiredDays(int requiredDays) {
+	public void setRequiredDays(Integer requiredDays) {
 		this.requiredDays = requiredDays;
 	}
 }

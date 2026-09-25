@@ -12,7 +12,10 @@ import java.time.Duration;
 public record HeartRateZone(
 		
 		/**
-		 * Zero-based or FIT-defined zone number.
+		 * Zero-based heart-rate zone number.
+		 *
+		 * <p>The number is used to identify the zone independently of its position
+		 * in a {@link HeartRateZones} list.</p>
 		 */
 		Integer number,
 		

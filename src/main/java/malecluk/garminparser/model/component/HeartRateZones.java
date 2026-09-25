@@ -23,6 +23,15 @@ public record HeartRateZones(List<HeartRateZone> zonesList) {
 
 	}
 
+	/**
+	 * Checks whether a heart-rate zone with the specified actual zone number exists.
+	 *
+	 * <p>The number is matched against {@link HeartRateZone#number()}, not against
+	 * the position of the zone in the list.</p>
+	 *
+	 * @param zoneNumber zone number to look for
+	 * @return {@code true} if the zone is present
+	 */
 	public boolean hasZone(int zoneNumber) {
 
 		return zonesList.stream().anyMatch(zone -> zone.number().equals(zoneNumber));
