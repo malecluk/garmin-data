@@ -53,3 +53,18 @@ tasks.named('test') {
     // for Mockito as Java Agent
     jvmArgs += "-javaagent:${configurations.mockitoAgent.singleFile}"
 }
+
+// fail tests if coverage is less than selected minimum
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.30
+            }
+        }
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
