@@ -17,21 +17,29 @@ import malecluk.garminparser.model.component.ActivityElevationData;
 import malecluk.garminparser.model.component.HeartRateZone;
 import malecluk.garminparser.model.component.HeartRateZones;
 
+/**
+ * Formats {@link Activity} instances and their specialized activity data
+ * for console output.
+ *
+ * <p>The printer includes common activity fields and, when applicable,
+ * fields specific to outdoor activities, walking, running, meditation,
+ * floor climbing, hiking, rucking, training, and yoga.</p>
+ */
 @Component
 public class ActivityConsolePrinter {
 
 	/**
-	 * Method will print all fields of Activity into console
-	 * @param a Activity to print
+	 * Prints an activity to the console.
+	 * @param activity activity to print
 	 */
 	public void consolePrint(Activity a) {
 		System.out.println(toConsoleString(a));
 	}
 	
 	/**
-	 * Method will return console safe String (with new lines) with list of all parameters of activity
-	 * @param act Activity to print
-	 * @return String for console output
+	 * Returns a string containing the activity data formatted for console output.
+	 * @param act activity to format
+	 * @return formatted activity data
 	 */
 	public String toConsoleString(Activity act) {
 		StringBuilder sb = new StringBuilder();

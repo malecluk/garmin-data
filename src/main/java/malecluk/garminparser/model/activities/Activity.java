@@ -10,6 +10,13 @@ import malecluk.garminparser.model.component.ActivityDeviceInfo;
 import malecluk.garminparser.model.component.ActivityElevationData;
 import malecluk.garminparser.model.component.HeartRateZones;
 
+/**
+ * Base domain representation of a Garmin activity.
+ *
+ * <p>Contains data common to all supported activity types, such as sport,
+ * timestamps, duration, device information, elevation data and heart-rate
+ * zones. Sport-specific data is represented by subclasses.</p>
+ */
 public class Activity {
 	
 	/** 

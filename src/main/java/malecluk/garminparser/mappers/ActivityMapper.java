@@ -12,6 +12,12 @@ import malecluk.garminparser.model.SubSport;
 import malecluk.garminparser.model.activities.Activity;
 import malecluk.garminparser.model.component.ActivityDeviceInfo;
 
+/**
+ * Maps common FIT session and file-identification data to an {@link Activity}.
+ *
+ * <p>This mapper handles data shared by all activity types. Sport-specific
+ * fields are mapped by dedicated mapper components.</p>
+ */
 @Component
 public class ActivityMapper {
 
