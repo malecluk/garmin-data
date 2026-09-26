@@ -4,16 +4,16 @@ spring:
 
 fit:
   mesg-dto-printer:
-    disable-all-prints: true
+    disable-all-prints: false
     print-activity-mesg: true
-    print-device-info-mesg: false
-    print-device-settings-mesg: false
+    print-device-info-mesg: true
+    print-device-settings-mesg: true
     print-hr-zone-mesg: true
-    print-lap-mesg: false
+    print-lap-mesg: true
     print-session-mesg: true
-    print-sport-mesg: false
+    print-sport-mesg: true
     print-time-in-zone-mesg: true
-    print-timestamp-correlation-mesg: false
+    print-timestamp-correlation-mesg: true
     print-user-profile-mesg: true
     print-zones-target-mesg: true
 

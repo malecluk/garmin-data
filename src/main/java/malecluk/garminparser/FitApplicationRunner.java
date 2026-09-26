@@ -84,7 +84,7 @@ public class FitApplicationRunner implements CommandLineRunner {
 				//.filter(p -> p.getFileName().toString().startsWith("24378906759")) // MEDITATION - for debug only
 				//.filter(p -> p.getFileName().toString().startsWith("24375316476")) // HIKING - RUCKING - for debug only
 				//.filter(p -> p.getFileName().toString().startsWith("24235915590")) // RUNNING - for debug only
-				//.filter(p -> p.getFileName().toString().startsWith("24433414568")) // WALKING - for debug only
+				.filter(p -> p.getFileName().toString().startsWith("24433414568")) // WALKING - for debug only
 				//.filter(p -> p.getFileName().toString().startsWith("24257393733")) // TRAINING - YOGA - for debug only
 				//
 				//.filter(p -> p.getFileName().toString().startsWith("24384540935") || p.getFileName().toString().startsWith("24394793751")) // for debug only

@@ -8,6 +8,7 @@ import malecluk.garminparser.model.Sport;
 import malecluk.garminparser.model.SubSport;
 import malecluk.garminparser.model.component.ActivityDeviceInfo;
 import malecluk.garminparser.model.component.ActivityElevationData;
+import malecluk.garminparser.model.component.ActivityLaps;
 import malecluk.garminparser.model.component.HeartRateZones;
 
 /**
@@ -33,6 +34,11 @@ public class Activity {
 	 * Information about the time spent in individual heart rate zones during the activity.
 	 */
 	private HeartRateZones heartRateZones;
+	
+	/**
+	 * Laps recorded during the activity.
+	 */
+	private ActivityLaps laps;
 	
 	/**
 	 * Date and time when the original activity file was created.
@@ -82,6 +88,14 @@ public class Activity {
 	private Duration totalTimerTime;
 	
 	//-----------------------
+	
+	public ActivityLaps getLaps() {
+		return laps;
+	}
+
+	public void setLaps(ActivityLaps laps) {
+		this.laps = laps;
+	}
 	
 	/**
 	 * Returns information about the device that recorded the activity.
