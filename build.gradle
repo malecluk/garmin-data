@@ -46,7 +46,7 @@ dependencies {
     }
     
     constraints {
-        implementation('tools.jackson.core:jackson-databind:3.1.6') {
+        implementation('tools.jackson.core:jackson-databind:3.1.7') {
             because 'Fixes a vulnerability in jackson-databind 3.1.5'
         }
         implementation('org.apache.commons:commons-lang3:3.18.0') {
