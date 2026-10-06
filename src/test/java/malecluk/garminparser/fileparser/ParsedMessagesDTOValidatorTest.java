@@ -68,11 +68,14 @@ class ParsedMessagesDTOValidatorTest {
 	}
 
 	@Test
-	void isValid_returnsTrue_whenMultipleSessionMessagesArePresent() {
-		ParsedFitFileMessagesDTO dto = createValidDto();
-		dto.getSessionMesgList().add(new SessionMesg());
+	void isValid_returnsFalse_whenMultipleSessionMessagesArePresent() {
+	    ParsedFitFileMessagesDTO dto = createValidDto();
 
-		assertTrue(validator.isValid(dto));
+	    SessionMesg secondSessionMesg = new SessionMesg();
+	    secondSessionMesg.setSport(Sport.RUNNING);
+	    dto.getSessionMesgList().add(secondSessionMesg);
+
+	    assertFalse(validator.isValid(dto));
 	}
 
 	@Test

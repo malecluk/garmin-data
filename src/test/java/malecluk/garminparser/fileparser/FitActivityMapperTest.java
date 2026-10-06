@@ -106,6 +106,25 @@ class FitActivityMapperTest {
 		verifyNoInteractions(baseActivityMapper, outdoorMovingMapper, walkingMapper, elevationMapper,
 				heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper);
 	}
+	
+	@Test
+	void map_multipleSessionMessages_returnsNull() {
+	    ParsedFitFileMessagesDTO dto = validDto(Sport.WALKING, SubSport.GENERIC);
+
+	    SessionMesg secondSessionMesg = mock(SessionMesg.class);
+	    dto.getSessionMesgList().add(secondSessionMesg);
+
+	    when(parsedMessagesDTOValidator.isValid(dto)).thenReturn(false);
+
+	    Activity result = mapper.map(dto);
+
+	    assertNull(result);
+
+	    verify(parsedMessagesDTOValidator).isValid(dto);
+
+	    verifyNoInteractions(baseActivityMapper, outdoorMovingMapper, walkingMapper, elevationMapper,
+	            heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper);
+	}
 
 	// -------------------------------------------------------------------------
 	// Activity IDs
