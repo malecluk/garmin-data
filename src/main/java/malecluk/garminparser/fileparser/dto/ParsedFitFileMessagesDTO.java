@@ -10,6 +10,7 @@ import com.garmin.fit.DeviceSettingsMesg;
 import com.garmin.fit.FileIdMesg;
 import com.garmin.fit.HrZoneMesg;
 import com.garmin.fit.LapMesg;
+import com.garmin.fit.RecordMesg;
 import com.garmin.fit.SessionMesg;
 import com.garmin.fit.SetMesg;
 import com.garmin.fit.SportMesg;
@@ -39,6 +40,7 @@ public class ParsedFitFileMessagesDTO {
 	private final List<UserProfileMesg> userProfileMesgList = new ArrayList<>();
 	private final List<ZonesTargetMesg> zonesTargetMesgList = new ArrayList<>();
 	private final List<SetMesg> setMesgList = new ArrayList<>();
+	private final List<RecordMesg> recordMesgList = new ArrayList<>();
 	
 	private Path sourceFilePath;
 	private SourceFileHash sourceFileHash;
@@ -148,6 +150,14 @@ public class ParsedFitFileMessagesDTO {
 	public List<ZonesTargetMesg> getZonesTargetMesgList() {
 		return zonesTargetMesgList;
 	}
+	
+	/**
+	 * Returns list of stored RecordMesg messages
+	 * @return list of RecordMesg
+	 */
+	public List<RecordMesg> getRecordMesgList() {
+		return recordMesgList;
+	}
 
 	/**
 	 * Returns the path of the source FIT file.
@@ -180,5 +190,5 @@ public class ParsedFitFileMessagesDTO {
 	public void setSourceFileHash(SourceFileHash sourceFileHash) {
 		this.sourceFileHash = sourceFileHash;
 	}
-	
+
 }

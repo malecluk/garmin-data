@@ -86,7 +86,7 @@ public class FitApplicationRunner implements CommandLineRunner {
 
 		List<String> debugFilePrefixes = fitConfiguration.filesScanner().debugFilePrefixes();
 
-		// restrict processing to only one or few files
+		// restrict processing to only one or few files if configured in application.yml
 		if (!debugFilePrefixes.isEmpty()) {
 			files = files.stream().filter(path -> debugFilePrefixes.stream()
 					.anyMatch(prefix -> path.getFileName().toString().startsWith(prefix))).toList();

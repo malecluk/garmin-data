@@ -28,6 +28,7 @@ import com.garmin.fit.Language;
 import com.garmin.fit.LapMesg;
 import com.garmin.fit.MesgNum;
 import com.garmin.fit.PwrZoneCalc;
+import com.garmin.fit.RecordMesg;
 import com.garmin.fit.SessionMesg;
 import com.garmin.fit.SetMesg;
 import com.garmin.fit.Sport;
@@ -634,29 +635,82 @@ class MyMesgListenerTest {
 		assertEquals(sourceMesg.getMessageIndex(), storedMesg.getMessageIndex());
 		assertEquals(sourceMesg.getWktStepIndex(), storedMesg.getWktStepIndex());
 	}
-	
+
 	@Test
 	void onMesg_withUnknownMessage_doesNothing() {
-	    MyMesgListener listener = new MyMesgListener();
-	    BloodPressureMesg bloodPressureMesg = new BloodPressureMesg();
+		MyMesgListener listener = new MyMesgListener();
+		BloodPressureMesg bloodPressureMesg = new BloodPressureMesg();
 
-	    ParsedFitFileMessagesDTO messages = listener.getMessages();
+		ParsedFitFileMessagesDTO messages = listener.getMessages();
 
-	    assertDoesNotThrow(() -> listener.onMesg(bloodPressureMesg));
+		assertDoesNotThrow(() -> listener.onMesg(bloodPressureMesg));
 
-	    assertTrue(messages.getActivityMesgList().isEmpty());
-	    assertTrue(messages.getDeviceInfoMesgList().isEmpty());
-	    assertTrue(messages.getDeviceSettingsMesgList().isEmpty());
-	    assertTrue(messages.getFileIdMesgList().isEmpty());
-	    assertTrue(messages.getHrZoneMesgList().isEmpty());
-	    assertTrue(messages.getLapMesgList().isEmpty());
-	    assertTrue(messages.getSessionMesgList().isEmpty());
-	    assertTrue(messages.getSportMesgList().isEmpty());
-	    assertTrue(messages.getTimeInZoneMesgList().isEmpty());
-	    assertTrue(messages.getTimestampCorrelationMesgList().isEmpty());
-	    assertTrue(messages.getUserProfileMesgList().isEmpty());
-	    assertTrue(messages.getZonesTargetMesgList().isEmpty());
-	    assertTrue(messages.getSetMesgList().isEmpty());
+		assertTrue(messages.getActivityMesgList().isEmpty());
+		assertTrue(messages.getDeviceInfoMesgList().isEmpty());
+		assertTrue(messages.getDeviceSettingsMesgList().isEmpty());
+		assertTrue(messages.getFileIdMesgList().isEmpty());
+		assertTrue(messages.getHrZoneMesgList().isEmpty());
+		assertTrue(messages.getLapMesgList().isEmpty());
+		assertTrue(messages.getSessionMesgList().isEmpty());
+		assertTrue(messages.getSportMesgList().isEmpty());
+		assertTrue(messages.getTimeInZoneMesgList().isEmpty());
+		assertTrue(messages.getTimestampCorrelationMesgList().isEmpty());
+		assertTrue(messages.getUserProfileMesgList().isEmpty());
+		assertTrue(messages.getZonesTargetMesgList().isEmpty());
+		assertTrue(messages.getSetMesgList().isEmpty());
 	}
 
+	@Test
+	void onMesg_withRecordMesg_storesRecordMesgsInOrder() {
+		// Arrange
+		RecordMesg first = new RecordMesg();
+		first.setTimestamp(new DateTime(1700000000L));
+		first.setPositionLat(500000000);
+		first.setPositionLong(140000000);
+
+		RecordMesg second = new RecordMesg();
+		second.setTimestamp(new DateTime(1700000060L));
+		second.setPositionLat(500100000);
+		second.setPositionLong(140010000);
+
+		RecordMesg third = new RecordMesg();
+		third.setTimestamp(new DateTime(1700000120L));
+		third.setPositionLat(500200000);
+		third.setPositionLong(140020000);
+
+		MyMesgListener listener = new MyMesgListener();
+
+		// Act
+		listener.onMesg(first);
+		listener.onMesg(second);
+		listener.onMesg(third);
+
+		// Assert
+		ParsedFitFileMessagesDTO messages = listener.getMessages();
+
+		assertEquals(3, messages.getRecordMesgList().size());
+
+		RecordMesg storedFirst = messages.getRecordMesgList().get(0);
+		RecordMesg storedSecond = messages.getRecordMesgList().get(1);
+		RecordMesg storedThird = messages.getRecordMesgList().get(2);
+
+		assertNotSame(first, storedFirst);
+		assertNotSame(second, storedSecond);
+		assertNotSame(third, storedThird);
+
+		assertEquals(first.getNum(), storedFirst.getNum());
+		assertEquals(first.getTimestamp().getTimestamp(), storedFirst.getTimestamp().getTimestamp());
+		assertEquals(first.getPositionLat(), storedFirst.getPositionLat());
+		assertEquals(first.getPositionLong(), storedFirst.getPositionLong());
+
+		assertEquals(second.getNum(), storedSecond.getNum());
+		assertEquals(second.getTimestamp().getTimestamp(), storedSecond.getTimestamp().getTimestamp());
+		assertEquals(second.getPositionLat(), storedSecond.getPositionLat());
+		assertEquals(second.getPositionLong(), storedSecond.getPositionLong());
+
+		assertEquals(third.getNum(), storedThird.getNum());
+		assertEquals(third.getTimestamp().getTimestamp(), storedThird.getTimestamp().getTimestamp());
+		assertEquals(third.getPositionLat(), storedThird.getPositionLat());
+		assertEquals(third.getPositionLong(), storedThird.getPositionLong());
+	}
 }

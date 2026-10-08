@@ -16,6 +16,7 @@ import malecluk.garminparser.mappers.ActivityLapsMapper;
 import malecluk.garminparser.mappers.ActivityMapper;
 import malecluk.garminparser.mappers.ActivitySetsMapper;
 import malecluk.garminparser.mappers.HeartRateZonesMapper;
+import malecluk.garminparser.mappers.TrackPointMapper;
 import malecluk.garminparser.mappers.sportspecific.OutdoorMovingMapper;
 import malecluk.garminparser.mappers.sportspecific.RuckingMapper;
 import malecluk.garminparser.mappers.sportspecific.WalkingMapper;
@@ -73,11 +74,12 @@ public class FitActivityMapper {
 	private final ActivitySetsMapper activitySetsMapper;
 	private final RuckingMapper ruckingMapper;
 	private final ParsedMessagesDTOValidator parsedMessagesDTOValidator;
+	private final TrackPointMapper trackPointMapper;
 
 	public FitActivityMapper(ActivityMapper baseActivityMapper, OutdoorMovingMapper outdoorMovingMapper,
 			WalkingMapper walkingMapper, ActivityElevationDataMapper elevationMapper,
 			HeartRateZonesMapper heartRateZonesMapper, ActivityLapsMapper activityLapsMapper,
-			ActivitySetsMapper activitySetsMapper, RuckingMapper ruckingMapper, ParsedMessagesDTOValidator parsedMessagesDTOValidator) {
+			ActivitySetsMapper activitySetsMapper, RuckingMapper ruckingMapper, TrackPointMapper trackPointMapper, ParsedMessagesDTOValidator parsedMessagesDTOValidator) {
 
 		this.baseActivityMapper = baseActivityMapper;
 		this.outdoorMovingMapper = outdoorMovingMapper;
@@ -87,6 +89,7 @@ public class FitActivityMapper {
 		this.activityLapsMapper = activityLapsMapper;
 		this.activitySetsMapper = activitySetsMapper;
 		this.ruckingMapper = ruckingMapper;
+		this.trackPointMapper = trackPointMapper;
 		this.parsedMessagesDTOValidator = parsedMessagesDTOValidator;
 	}
 
@@ -142,6 +145,7 @@ public class FitActivityMapper {
 
 		if (activity instanceof OutdoorMovingActivity outdoorMoving) {
 			outdoorMovingMapper.setOutdoorMovingSessionParams(outdoorMoving, firstSessionMesg);
+			outdoorMoving.setTrack(trackPointMapper.map(message.getRecordMesgList()));
 		}
 
 		return activity;

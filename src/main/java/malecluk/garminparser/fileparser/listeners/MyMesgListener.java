@@ -12,6 +12,7 @@ import com.garmin.fit.LapMesg;
 import com.garmin.fit.Mesg;
 import com.garmin.fit.MesgListener;
 import com.garmin.fit.MesgNum;
+import com.garmin.fit.RecordMesg;
 import com.garmin.fit.SessionMesg;
 import com.garmin.fit.SetMesg;
 import com.garmin.fit.SportMesg;
@@ -108,6 +109,11 @@ public class MyMesgListener implements MesgListener {
 			case MesgNum.SET -> {
 				messagesDTO.getSetMesgList().add(new SetMesg(mesg));
 				log.debug("Added SetMesg");
+			}
+			
+			case MesgNum.RECORD -> {
+				messagesDTO.getRecordMesgList().add(new RecordMesg(mesg));
+				log.debug("Added RecordMesg");
 			}
 			
 			default -> {}

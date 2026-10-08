@@ -1,6 +1,7 @@
 package malecluk.garminparser.model.activities;
 
 import malecluk.garminparser.model.ActivityIds;
+import malecluk.garminparser.model.component.ActivityTrack;
 import malecluk.garminparser.model.value.Distance;
 
 /**
@@ -20,6 +21,11 @@ public class OutdoorMovingActivity extends Activity {
 	 * Total distance covered during the activity.
 	 */
 	private Distance totalDistance;
+	
+	/**
+	 * Recorded GPS track of the activity.
+	 */
+	private ActivityTrack track;
 	
 	//-----------------------
 	
@@ -86,4 +92,24 @@ public class OutdoorMovingActivity extends Activity {
 	public void setTotalDistance(Distance totalDistance) {
 		this.totalDistance = totalDistance;
 	}
+
+	/**
+	 * Returns the activity track.
+	 *
+	 * @return activity track, or {@code null} if no track is available
+	 */
+	public ActivityTrack getTrack() {
+		return track;
+	}
+
+	/**
+	 * Sets the activity track.
+	 *
+	 * @param track activity track
+	 */
+	public void setTrack(ActivityTrack track) {
+		this.track = track;
+	}
+	
+	
 }

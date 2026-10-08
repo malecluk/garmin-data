@@ -125,6 +125,12 @@ public class ParsedFitFileMessagesDTOPrinter {
 	            dto.getSetMesgList(),
 	            config.mesgDtoPrinter().printSetMesg());
 		
+		printMessages(
+	            "RecordMesg",
+	            "print-record-mesg",
+	            dto.getRecordMesgList(),
+	            config.mesgDtoPrinter().printRecordMesg());
+		
 		System.out.println("===================================================");
 		
 	}

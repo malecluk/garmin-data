@@ -3,12 +3,15 @@ package malecluk.garminparser.fileparser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +35,7 @@ import malecluk.garminparser.mappers.ActivityLapsMapper;
 import malecluk.garminparser.mappers.ActivityMapper;
 import malecluk.garminparser.mappers.ActivitySetsMapper;
 import malecluk.garminparser.mappers.HeartRateZonesMapper;
+import malecluk.garminparser.mappers.TrackPointMapper;
 import malecluk.garminparser.mappers.sportspecific.OutdoorMovingMapper;
 import malecluk.garminparser.mappers.sportspecific.RuckingMapper;
 import malecluk.garminparser.mappers.sportspecific.WalkingMapper;
@@ -47,6 +51,7 @@ import malecluk.garminparser.model.activities.Running;
 import malecluk.garminparser.model.activities.TrainingActivity;
 import malecluk.garminparser.model.activities.Walking;
 import malecluk.garminparser.model.activities.Yoga;
+import malecluk.garminparser.model.component.ActivityTrack;
 
 class FitActivityMapperTest {
 
@@ -76,6 +81,9 @@ class FitActivityMapperTest {
 	
 	@Mock
 	private RuckingMapper ruckingMapper;
+	
+	@Mock
+	private TrackPointMapper trackPointMapper;
 
 	private FitActivityMapper mapper;
 
@@ -84,7 +92,7 @@ class FitActivityMapperTest {
 		MockitoAnnotations.openMocks(this);
 
 		mapper = new FitActivityMapper(baseActivityMapper, outdoorMovingMapper, walkingMapper, elevationMapper,
-				heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper, parsedMessagesDTOValidator);
+				heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper, trackPointMapper, parsedMessagesDTOValidator);
 	}
 
 	// -------------------------------------------------------------------------
@@ -104,7 +112,7 @@ class FitActivityMapperTest {
 		verify(parsedMessagesDTOValidator).isValid(dto);
 
 		verifyNoInteractions(baseActivityMapper, outdoorMovingMapper, walkingMapper, elevationMapper,
-				heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper);
+				heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper, trackPointMapper);
 	}
 	
 	@Test
@@ -123,7 +131,7 @@ class FitActivityMapperTest {
 	    verify(parsedMessagesDTOValidator).isValid(dto);
 
 	    verifyNoInteractions(baseActivityMapper, outdoorMovingMapper, walkingMapper, elevationMapper,
-	            heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper);
+	            heartRateZonesMapper, activityLapsMapper, activitySetsMapper, ruckingMapper, trackPointMapper);
 	}
 
 	// -------------------------------------------------------------------------
@@ -164,6 +172,23 @@ class FitActivityMapperTest {
 		verify(activityLapsMapper).map(result, dto.getLapMesgList());
 		verify(activitySetsMapper).map(result, dto.getSetMesgList());
 	}
+	
+	// -------------------------------------------------------------------------
+	// Outdoor Moving
+	// -------------------------------------------------------------------------
+	
+	@Test
+	void map_mapsTrackForOutdoorMovingActivity() {
+	    ParsedFitFileMessagesDTO dto = validDto(Sport.RUNNING, SubSport.GENERIC);
+	    ActivityTrack track = new ActivityTrack(List.of());
+
+	    when(trackPointMapper.map(dto.getRecordMesgList())).thenReturn(track);
+
+	    Activity result = mapper.map(dto);
+
+	    assertSame(track, ((OutdoorMovingActivity) result).getTrack());
+	    verify(trackPointMapper).map(dto.getRecordMesgList());
+	}
 
 	// -------------------------------------------------------------------------
 	// FLOOR_CLIMBING
@@ -180,7 +205,7 @@ class FitActivityMapperTest {
 		verifyBaseParams(dto, result);
 		verifyElevation(dto, result);
 
-		verifyNoInteractions(outdoorMovingMapper, walkingMapper);
+		verifyNoInteractions(outdoorMovingMapper, walkingMapper, trackPointMapper);
 	}
 
 	@Test
@@ -265,7 +290,7 @@ class FitActivityMapperTest {
 
 		verifyBaseParams(dto, result);
 
-		verifyNoInteractions(outdoorMovingMapper, walkingMapper);
+		verifyNoInteractions(outdoorMovingMapper, walkingMapper, trackPointMapper);
 	}
 
 	@Test
@@ -368,7 +393,7 @@ class FitActivityMapperTest {
 
 		verifyBaseParams(dto, result);
 
-		verifyNoInteractions(outdoorMovingMapper, walkingMapper);
+		verifyNoInteractions(outdoorMovingMapper, walkingMapper, trackPointMapper);
 	}
 
 	@Test
@@ -392,7 +417,7 @@ class FitActivityMapperTest {
 
 		verifyBaseParams(dto, result);
 
-		verifyNoInteractions(outdoorMovingMapper, walkingMapper);
+		verifyNoInteractions(outdoorMovingMapper, walkingMapper, trackPointMapper);
 	}
 
 	@Test
@@ -416,7 +441,7 @@ class FitActivityMapperTest {
 
 		verifyBaseParams(dto, result);
 
-		verifyNoInteractions(outdoorMovingMapper, walkingMapper);
+		verifyNoInteractions(outdoorMovingMapper, walkingMapper, trackPointMapper);
 	}
 
 	@Test
@@ -444,7 +469,7 @@ class FitActivityMapperTest {
 
 		verifyBaseParams(dto, result);
 
-		verifyNoInteractions(outdoorMovingMapper, walkingMapper);
+		verifyNoInteractions(outdoorMovingMapper, walkingMapper, trackPointMapper);
 	}
 
 	// -------------------------------------------------------------------------

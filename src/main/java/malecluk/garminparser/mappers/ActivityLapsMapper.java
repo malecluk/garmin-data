@@ -62,9 +62,9 @@ public class ActivityLapsMapper {
 		lap.setStartTime(toInstant(message.getStartTime()));
 		lap.setEndTime(toInstant(message.getTimestamp()));
 
-		lap.setStartPosition(toPosition(message.getStartPositionLat(), message.getStartPositionLong()));
+		lap.setStartPosition(Position.fromSemicircles(message.getStartPositionLat(), message.getStartPositionLong()));
 
-		lap.setEndPosition(toPosition(message.getEndPositionLat(), message.getEndPositionLong()));
+		lap.setEndPosition(Position.fromSemicircles(message.getEndPositionLat(), message.getEndPositionLong()));
 
 		lap.setElapsedTime(toDuration(message.getTotalElapsedTime()));
 		lap.setTimerTime(toDuration(message.getTotalTimerTime()));
@@ -126,33 +126,6 @@ public class ActivityLapsMapper {
 	private Distance toDistance(Number meters) {
 
 		return meters == null ? null : new Distance(meters);
-	}
-
-	/**
-	 * Converts FIT position values from semicircles to degrees.
-	 *
-	 * @param latitude  latitude in semicircles
-	 * @param longitude longitude in semicircles
-	 * @return converted position, or {@code null} if both values are missing
-	 */
-	private Position toPosition(Integer latitude, Integer longitude) {
-
-		if (latitude == null && longitude == null) {
-			return null;
-		}
-
-		return new Position(toDegrees(latitude), toDegrees(longitude));
-	}
-
-	/**
-	 * Converts a FIT coordinate from semicircles to degrees.
-	 *
-	 * @param semicircles coordinate in FIT semicircles
-	 * @return coordinate in degrees, or {@code null} if the value is missing
-	 */
-	private Double toDegrees(Integer semicircles) {
-
-		return semicircles == null ? null : semicircles * (180.0 / 2147483648.0);
 	}
 
 	/**

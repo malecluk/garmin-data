@@ -95,12 +95,18 @@ public record FitConfiguration(
             /**
              * Whether decoded {@code SetMesg} messages are printed.
              */
-            boolean printSetMesg
+            boolean printSetMesg,
+            
+            /**
+             * Whether decoded {@code RecordMesg} messages are printed.
+             */
+            boolean printRecordMesg
     ) {
 		
 		public static MesgDtoPrinter disabled() {
 	        return new MesgDtoPrinter(
 	                true,
+	                false,
 	                false,
 	                false,
 	                false,
