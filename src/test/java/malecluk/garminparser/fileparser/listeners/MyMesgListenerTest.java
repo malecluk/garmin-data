@@ -667,6 +667,8 @@ class MyMesgListenerTest {
 		first.setTimestamp(new DateTime(1700000000L));
 		first.setPositionLat(500000000);
 		first.setPositionLong(140000000);
+		first.setDistance(1234.5f);
+		first.setEnhancedAltitude(321.7f);
 
 		RecordMesg second = new RecordMesg();
 		second.setTimestamp(new DateTime(1700000060L));
@@ -702,6 +704,8 @@ class MyMesgListenerTest {
 		assertEquals(first.getTimestamp().getTimestamp(), storedFirst.getTimestamp().getTimestamp());
 		assertEquals(first.getPositionLat(), storedFirst.getPositionLat());
 		assertEquals(first.getPositionLong(), storedFirst.getPositionLong());
+		assertEquals(first.getDistance(), storedFirst.getDistance());
+		assertEquals(first.getEnhancedAltitude(), storedFirst.getEnhancedAltitude());
 
 		assertEquals(second.getNum(), storedSecond.getNum());
 		assertEquals(second.getTimestamp().getTimestamp(), storedSecond.getTimestamp().getTimestamp());

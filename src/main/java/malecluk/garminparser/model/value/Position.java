@@ -55,13 +55,6 @@ public record Position(Double latitude, Double longitude) {
 	}
 
 	/**
-	 * In Garmin FIT - position is stored in signed 32bit integer.
-	 * To get degrees from it You need to count semicircles * (180.0 / 2^31) (last bit is for +or -)
-	 * 2^31 = 2147483648 - that's from where constant below comes from.
-	 * @param semicircles Integer value of semicircles
-	 * @return Double value of degrees
-	 */
-	/**
 	 * Converts a FIT coordinate from semicircles to degrees.
 	 *
 	 * <p>FIT stores geographic coordinates as signed 32-bit semicircle values.
