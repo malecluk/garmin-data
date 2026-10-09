@@ -2,6 +2,10 @@ spring:
   main:
     banner-mode: off
 
+map:
+  visited-area:
+    output-path: "d:\\Garmin\\data\\visited-area.geojson"
+
 fit:
   files-scanner:
     directory-paths: 

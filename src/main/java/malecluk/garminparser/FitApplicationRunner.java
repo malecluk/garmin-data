@@ -1,8 +1,10 @@
 package malecluk.garminparser;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.locationtech.jts.geom.Geometry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,8 @@ import malecluk.garminparser.fileparser.FitFileParser;
 import malecluk.garminparser.fileparser.FitFileRenamer;
 import malecluk.garminparser.fileparser.FitFileScanner;
 import malecluk.garminparser.fileparser.dto.ParsedFitFileMessagesDTO;
+import malecluk.garminparser.map.ActivityAreaProcessor;
+import malecluk.garminparser.map.GeoJsonExporter;
 import malecluk.garminparser.model.activities.Activity;
 import malecluk.garminparser.processing.ActivityProcessor;
 import malecluk.garminparser.processing.results.ActivityProcessingResult;
@@ -41,6 +45,8 @@ public class FitApplicationRunner implements CommandLineRunner {
 	private final FitActivityMapper activityMapper; // maps messages to application domain model
 	private final ActivityProcessor activityProcessor;
 	private final ActivityResultConsolePrinter resultPrinter;
+	private final ActivityAreaProcessor activityAreaProcessor; // to create fog-of-war map
+	private final GeoJsonExporter geoJsonExporter;
 
 	private final FitConfiguration fitConfiguration;
 
@@ -55,7 +61,8 @@ public class FitApplicationRunner implements CommandLineRunner {
 
 	public FitApplicationRunner(FitFileParser fitFileParser, FitFileScanner fileScanner,
 			FitActivityMapper activityMapper, ActivityProcessor activityProcessor,
-			ActivityResultConsolePrinter resultPrinter, FitConfiguration fitConfiguration) {
+			ActivityResultConsolePrinter resultPrinter, FitConfiguration fitConfiguration,
+			ActivityAreaProcessor activityAreaProcessor, GeoJsonExporter geoJsonExporter) {
 
 		this.fitFileParser = fitFileParser;
 		this.fileScanner = fileScanner;
@@ -63,6 +70,8 @@ public class FitApplicationRunner implements CommandLineRunner {
 		this.activityProcessor = activityProcessor;
 		this.resultPrinter = resultPrinter;
 		this.fitConfiguration = fitConfiguration;
+		this.activityAreaProcessor = activityAreaProcessor;
+		this.geoJsonExporter = geoJsonExporter;
 	}
 
 	/**
@@ -84,6 +93,8 @@ public class FitApplicationRunner implements CommandLineRunner {
 		// read files from directory stored in config in application.yml file
 		List<Path> files = fileScanner.findFitFiles();
 
+		// read from properties if we want to restrict processing only to file or two
+		// for debug
 		List<String> debugFilePrefixes = fitConfiguration.filesScanner().debugFilePrefixes();
 
 		// restrict processing to only one or few files if configured in application.yml
@@ -91,6 +102,8 @@ public class FitApplicationRunner implements CommandLineRunner {
 			files = files.stream().filter(path -> debugFilePrefixes.stream()
 					.anyMatch(prefix -> path.getFileName().toString().startsWith(prefix))).toList();
 		}
+
+		List<Activity> activities = new ArrayList<>();
 
 		// parsing activities
 		for (Path file : files) {
@@ -117,6 +130,7 @@ public class FitApplicationRunner implements CommandLineRunner {
 				fitFileRenamer.rename(act);
 
 				activityProcessor.process(act);
+				activities.add(act);
 
 			}
 		}
@@ -129,6 +143,9 @@ public class FitApplicationRunner implements CommandLineRunner {
 		System.out.println("Files read: " + files.size());
 
 		System.out.println();
+
+		Geometry visitedArea = activityAreaProcessor.processActivities(activities);
+		geoJsonExporter.export(visitedArea);
 
 	}
 }

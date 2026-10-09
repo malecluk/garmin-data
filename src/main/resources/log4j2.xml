@@ -9,7 +9,7 @@
 
     <Loggers>
     	<!-- My application: default DEBUG -->
-        <Logger name="malecluk.garminparser" level="INFO"/>
+        <Logger name="malecluk.garminparser" level="DEBUG"/>
         
         <!-- Selected classes in application to allow debug only where needed -->
         <Logger name="malecluk.garminparser.fileparser.listeners.MyMesgListener" level="INFO"/>

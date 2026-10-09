@@ -8,6 +8,11 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    
+    maven {
+        // repo for geo tools
+        url = uri("https://repo.osgeo.org/repository/release/")
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -36,6 +41,14 @@ dependencies {
     
     // Garmin FIT SDK for reading .FIT files
     implementation 'com.garmin:fit:21.217.0'
+    
+    implementation 'org.locationtech.jts:jts-core:1.20.0'
+    implementation 'org.locationtech.jts.io:jts-io-common:1.20.0'
+    
+    // Geo Tools
+    implementation 'org.geotools:gt-main:34.0'
+    implementation 'org.geotools:gt-referencing:34.0'
+    implementation 'org.geotools:gt-epsg-hsql:34.0'
     
     // Spring Boot test framework
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
