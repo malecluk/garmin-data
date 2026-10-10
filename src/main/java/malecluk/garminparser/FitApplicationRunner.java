@@ -144,8 +144,9 @@ public class FitApplicationRunner implements CommandLineRunner {
 
 		System.out.println();
 
-		Geometry visitedArea = activityAreaProcessor.processActivities(activities);
-		geoJsonExporter.export(visitedArea);
+		//Geometry visitedArea = activityAreaProcessor.processActivities(activities);
+		//geoJsonExporter.export(visitedArea);
+		System.out.println("Area done.");
 
 	}
 }

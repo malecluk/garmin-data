@@ -189,10 +189,25 @@ class TrackPointMapperTest {
 	}
 
 	@Test
-	void map_withBothPositionsNull_throwsNullPointerException() {
+	void map_withBothPositionsNull_skipsRecord() {
 		RecordMesg record = createRecord(Instant.parse("2026-10-08T10:15:30Z"), null, null, null, null);
 
-		assertThrows(NullPointerException.class, () -> mapper.map(List.of(record)));
+		ActivityTrack track = mapper.map(List.of(record));
+
+		assertEquals(List.of(), track.getPoints());
+	}
+
+	@Test
+	void map_withRecordWithoutPosition_skipsOnlyInvalidRecord() {
+		RecordMesg invalidRecord = createRecord(Instant.parse("2026-10-08T10:15:00Z"), null, null, null, null);
+
+		RecordMesg validRecord = createRecord(Instant.parse("2026-10-08T10:16:00Z"), 100_000_000, 200_000_000, 123.4f,
+				321.0f);
+
+		ActivityTrack track = mapper.map(List.of(invalidRecord, validRecord));
+
+		assertEquals(1, track.getPoints().size());
+		assertEquals(Instant.parse("2026-10-08T10:16:00Z"), track.getPoints().getFirst().timestamp());
 	}
 
 	@Test

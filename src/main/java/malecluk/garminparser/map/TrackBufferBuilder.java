@@ -4,6 +4,8 @@ package malecluk.garminparser.map;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TrackBufferBuilder {
+	
+	private static final Logger log = LogManager.getLogger(TrackBufferBuilder.class);
 
 	private static final double BUFFER_DISTANCE_METRES = 50.0;
 
@@ -58,6 +62,8 @@ public class TrackBufferBuilder {
 		Objects.requireNonNull(segments, "segments must not be null");
 		Objects.requireNonNull(projection, "projection must not be null");
 
+		log.debug("Processing " + segments.size() + " segemnt(s)");
+		
 		if (segments.isEmpty()) {
 			return new org.locationtech.jts.geom.GeometryFactory().createGeometryCollection();
 		}

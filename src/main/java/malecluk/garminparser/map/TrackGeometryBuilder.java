@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
@@ -32,6 +34,8 @@ import malecluk.garminparser.model.value.Position;
  */
 @Component
 public class TrackGeometryBuilder {
+	
+	private static final Logger log = LogManager.getLogger(TrackGeometryBuilder.class);
 
 	private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
 

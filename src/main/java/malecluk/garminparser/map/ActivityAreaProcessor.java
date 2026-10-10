@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -33,6 +35,8 @@ import malecluk.garminparser.model.value.Position;
  */
 @Component
 public class ActivityAreaProcessor {
+	
+	private static final Logger log = LogManager.getLogger(ActivityAreaProcessor.class);
 
 	private final TrackGeometryBuilder trackGeometryBuilder;
 	private final CoordinateTransformer coordinateTransformer;
@@ -60,10 +64,14 @@ public class ActivityAreaProcessor {
 	 */
 	public Geometry process(Collection<ActivityTrack> tracks) {
 		Objects.requireNonNull(tracks, "tracks must not be null");
+		
+		log.debug("Tracks to proceed: " + tracks.size());
 
 		List<Geometry> activityAreas = new ArrayList<>();
 
+		int debugCounter = 0;
 		for (ActivityTrack track : tracks) {
+			log.debug("Processing track " + ++debugCounter + " / " + tracks.size());
 			Objects.requireNonNull(track, "tracks must not contain null elements");
 
 			List<LineString> segments = trackGeometryBuilder.build(track);
@@ -102,8 +110,9 @@ public class ActivityAreaProcessor {
 
 		for (Activity activity : activities) {
 			Objects.requireNonNull(activity, "activities must not contain null elements");
-
+			
 			if (activity instanceof OutdoorMovingActivity outdoorMoving && outdoorMoving.getTrack() != null) {
+				log.debug("Reading tracks for activity " + activity.getFilePath());
 				tracks.add(outdoorMoving.getTrack());
 			}
 		}

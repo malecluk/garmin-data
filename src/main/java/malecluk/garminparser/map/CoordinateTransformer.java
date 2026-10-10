@@ -9,6 +9,8 @@ import org.locationtech.jts.geom.Geometry;
 import org.springframework.stereotype.Component;
 import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
 import org.geotools.api.referencing.operation.MathTransform;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.geotools.api.referencing.FactoryException;
 import org.geotools.api.referencing.operation.TransformException;
 
@@ -35,6 +37,8 @@ import malecluk.garminparser.model.value.Position;
  */
 @Component
 public class CoordinateTransformer {
+	
+	private static final Logger log = LogManager.getLogger(CoordinateTransformer.class);
 
 	private static final int FIRST_UTM_ZONE = 1;
 	private static final int LAST_UTM_ZONE = 60;
@@ -99,6 +103,8 @@ public class CoordinateTransformer {
 		Objects.requireNonNull(geometry, "geometry must not be null");
 		Objects.requireNonNull(projection, "projection must not be null");
 
+		log.debug("transformToProjection");
+		
 		return transform(geometry, WGS84, projection);
 	}
 

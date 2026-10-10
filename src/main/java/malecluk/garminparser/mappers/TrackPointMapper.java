@@ -1,6 +1,7 @@
 package malecluk.garminparser.mappers;
 
 import com.garmin.fit.RecordMesg;
+
 import malecluk.garminparser.model.component.ActivityTrack;
 import malecluk.garminparser.model.component.TrackPoint;
 import malecluk.garminparser.model.value.Distance;
@@ -10,6 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,6 +26,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrackPointMapper {
 
+	private static final Logger log = LogManager.getLogger(TrackPointMapper.class);
+
 	/**
 	 * Maps record messages to an activity track and orders the track points
 	 * chronologically.
@@ -34,8 +39,16 @@ public class TrackPointMapper {
 	public ActivityTrack map(List<RecordMesg> recordMessages) {
 		Objects.requireNonNull(recordMessages, "recordMessages must not be null");
 
-		List<TrackPoint> points = recordMessages.stream().map(this::map)
-				.sorted(Comparator.comparing(TrackPoint::timestamp)).toList();
+		List<TrackPoint> points = recordMessages.stream().filter(recordMessage -> {
+			Objects.requireNonNull(recordMessage, "recordMessage must not be null");
+
+			if (recordMessage.getPositionLat() == null && recordMessage.getPositionLong() == null) {
+				log.warn("Skipping FIT record without GPS coordinates.");
+				return false;
+			}
+
+			return true;
+		}).map(this::map).sorted(Comparator.comparing(TrackPoint::timestamp)).toList();
 
 		return new ActivityTrack(points);
 	}
