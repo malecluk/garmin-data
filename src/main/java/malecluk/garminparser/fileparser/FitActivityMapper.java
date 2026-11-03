@@ -28,6 +28,7 @@ import malecluk.garminparser.model.activities.FloorClimbing;
 import malecluk.garminparser.model.activities.Hiking;
 import malecluk.garminparser.model.activities.Meditation;
 import malecluk.garminparser.model.activities.OutdoorMovingActivity;
+import malecluk.garminparser.model.activities.RockClimbing;
 import malecluk.garminparser.model.activities.Rucking;
 import malecluk.garminparser.model.activities.Running;
 import malecluk.garminparser.model.activities.TrainingActivity;
@@ -79,7 +80,8 @@ public class FitActivityMapper {
 	public FitActivityMapper(ActivityMapper baseActivityMapper, OutdoorMovingMapper outdoorMovingMapper,
 			WalkingMapper walkingMapper, ActivityElevationDataMapper elevationMapper,
 			HeartRateZonesMapper heartRateZonesMapper, ActivityLapsMapper activityLapsMapper,
-			ActivitySetsMapper activitySetsMapper, RuckingMapper ruckingMapper, TrackPointMapper trackPointMapper, ParsedMessagesDTOValidator parsedMessagesDTOValidator) {
+			ActivitySetsMapper activitySetsMapper, RuckingMapper ruckingMapper, TrackPointMapper trackPointMapper,
+			ParsedMessagesDTOValidator parsedMessagesDTOValidator) {
 
 		this.baseActivityMapper = baseActivityMapper;
 		this.outdoorMovingMapper = outdoorMovingMapper;
@@ -124,21 +126,18 @@ public class FitActivityMapper {
 		ActivityIds activityIds = createActivityIds(firstFileIdMesg, firstSessionMesg, message);
 
 		log.debug("Session sport: {}", firstSessionMesg.getSport().toString());
+		log.debug("Session subsport: {}", firstSessionMesg.getSubSport().toString());
 
 		Activity activity = switch (firstSessionMesg.getSport()) {
-		case FLOOR_CLIMBING -> mapFloorClimbing(firstSessionMesg, activityIds);
-
-		case HIKING -> mapHiking(firstSessionMesg, activityIds);
-
-		case MEDITATION -> mapMeditation(activityIds);
-
-		case RUNNING -> mapRunning(activityIds);
-
-		case TRAINING -> mapTraining(firstSessionMesg, activityIds);
-
-		case WALKING -> mapWalking(firstSessionMesg, activityIds);
-
-		default -> mapUnknown(firstSessionMesg, activityIds);
+		  case FLOOR_CLIMBING -> mapFloorClimbing(firstSessionMesg, activityIds);
+		  case HIKING -> mapHiking(firstSessionMesg, activityIds);
+		  case MEDITATION -> mapMeditation(activityIds);
+		  case RUNNING -> mapRunning(activityIds);
+		  case TRAINING -> mapTraining(firstSessionMesg, activityIds);
+		  case WALKING -> mapWalking(firstSessionMesg, activityIds);
+		  case ROCK_CLIMBING -> mapRockClimbing(activityIds);
+		  
+		  default -> mapUnknown(firstSessionMesg, activityIds);
 		};
 
 		mapCommonData(activity, firstFileIdMesg, firstSessionMesg, message);
@@ -161,7 +160,7 @@ public class FitActivityMapper {
 		if (sessionTimeInZoneMesg != null) {
 			heartRateZonesMapper.map(activity, sessionTimeInZoneMesg);
 		}
-		
+
 		elevationMapper.setActivityElevationData(activity, sessionMesg);
 
 		activityLapsMapper.map(activity, message.getLapMesgList());
@@ -228,7 +227,7 @@ public class FitActivityMapper {
 	 * @return mapped rucking or hiking activity
 	 */
 	private Activity mapHiking(SessionMesg sessionMesg, ActivityIds activityIds) {
-		
+
 		if (sessionMesg.getSubSport() == SubSport.RUCKING) {
 			return mapRucking(sessionMesg, activityIds);
 		}
@@ -249,7 +248,7 @@ public class FitActivityMapper {
 
 		Rucking activity = new Rucking(activityIds);
 		ruckingMapper.setRuckingSessionParams(activity, sessionMesg);
-		
+
 		return activity;
 	}
 
@@ -337,6 +336,20 @@ public class FitActivityMapper {
 		log.debug("Processing Breathing.");
 
 		Breathing activity = new Breathing(activityIds);
+
+		return activity;
+	}
+	
+	/**
+	 * Creates RockClimbing activity and maps a RockClimbing specific data.
+	 * 
+	 * @param activityIds identifiers associated with the activity
+	 * @return mapped RockClimbing activity
+	 */
+	private RockClimbing mapRockClimbing(ActivityIds activityIds) {
+		log.debug("Processing Rock Climbing.");
+
+		RockClimbing activity = new RockClimbing(activityIds);
 
 		return activity;
 	}

@@ -10,5 +10,6 @@ public enum SubSport {
 	RUCKING,
 	YOGA,
 	BREATHING,
+	INDOOR_CLIMBING,
 	UNKNOWN
 }

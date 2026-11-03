@@ -85,6 +85,7 @@ public class ActivityMapper {
 	        case RUNNING -> Sport.RUNNING;
 	        case TRAINING -> Sport.TRAINING;
 	        case WALKING -> Sport.WALKING;
+	        case ROCK_CLIMBING -> Sport.ROCK_CLIMBING;
 
 	        default -> Sport.UNKNOWN;
 	    };
@@ -111,6 +112,7 @@ public class ActivityMapper {
 		    case RUCKING -> SubSport.RUCKING;
 		    case YOGA -> SubSport.YOGA;
 		    case BREATHING -> SubSport.BREATHING;
+		    case INDOOR_CLIMBING -> SubSport.INDOOR_CLIMBING;
 		    
 		    default -> SubSport.UNKNOWN;
 		};

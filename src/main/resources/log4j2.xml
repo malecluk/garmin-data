@@ -13,6 +13,7 @@
         
         <!-- Selected classes in application to allow debug only where needed -->
         <Logger name="malecluk.garminparser.fileparser.listeners.MyMesgListener" level="WARN"/>
+        <Logger name="malecluk.garminparser.fileparser.FitFileParser" level="WARN"/>
         
         <!-- Spring Boot entry point: only INFO -->
         <Logger name="malecluk.garminparser.FitApplication" level="INFO"/>

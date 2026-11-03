@@ -12,5 +12,6 @@ public enum Sport {
 	RUNNING,
 	TRAINING,
 	WALKING,
+	ROCK_CLIMBING,
 	UNKNOWN
 }

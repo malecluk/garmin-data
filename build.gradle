@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.1.1'
+    id 'org.springframework.boot' version '4.1.2'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
 }
@@ -46,9 +46,9 @@ dependencies {
     implementation 'org.locationtech.jts.io:jts-io-common:1.20.0'
     
     // Geo Tools
-    implementation 'org.geotools:gt-main:34.5'
-    implementation 'org.geotools:gt-referencing:34.5'
-    implementation 'org.geotools:gt-epsg-hsql:34.5'
+    implementation 'org.geotools:gt-main:34.6'
+    implementation 'org.geotools:gt-referencing:34.6'
+    implementation 'org.geotools:gt-epsg-hsql:34.6'
     
     // Spring Boot test framework
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -62,22 +62,26 @@ dependencies {
     }
     
     constraints {
-        implementation('tools.jackson.core:jackson-core:3.1.7') {
-            because 'Fixes a vulnerability in jackson-core 3.1.5'
+        implementation('tools.jackson.core:jackson-core:3.1.8') {
+            because 'Fixes vulnerabilities in earlier Jackson 3.x releases'
         }
-        implementation('tools.jackson.core:jackson-databind:3.1.7') {
-            because 'Fixes a vulnerability in jackson-databind 3.1.5'
+        implementation('tools.jackson.core:jackson-databind:3.1.8') {
+            because 'Fixes vulnerabilities in earlier Jackson 3.x releases'
         }
         implementation('org.apache.commons:commons-lang3:3.21.0') {
             because 'Fixes a vulnerability in commons-lang3 3.16.0'
         }
-        implementation('org.codehaus.plexus:plexus-utils:3.6.1') {
-            because 'Fixes a vulnerability in plexus-utils 3.6.0'
+        implementation('org.codehaus.plexus:plexus-utils:3.6.2') {
+            because 'Fixes vulnerabilities in earlier Plexus Utils releases'
         }
-        implementation('com.fasterxml.jackson.core:jackson-core:2.21.7') {
+        implementation('com.fasterxml.jackson.core:jackson-core:2.21.8') {
             because 'Fixes a vulnerability in jackson-core 2.21.5'
         }
     }
+}
+
+jacoco {
+    toolVersion = '0.8.16'
 }
 
 tasks.named('test') {
