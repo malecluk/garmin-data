@@ -126,7 +126,7 @@ public class FitActivityMapper {
 		ActivityIds activityIds = createActivityIds(firstFileIdMesg, firstSessionMesg, message);
 
 		log.debug("Session sport: {}", firstSessionMesg.getSport().toString());
-		log.debug("Session subsport: {}", firstSessionMesg.getSubSport().toString());
+		log.debug("Session subsport: {}", (firstSessionMesg.getSubSport() == null ? "null" : firstSessionMesg.getSubSport().toString()));
 
 		Activity activity = switch (firstSessionMesg.getSport()) {
 		  case FLOOR_CLIMBING -> mapFloorClimbing(firstSessionMesg, activityIds);
